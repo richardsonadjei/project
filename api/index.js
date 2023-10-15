@@ -2,11 +2,14 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import userRouter from './routes/user.route.js';
+import authRouter from './routes/auth.route.js'
 
 dotenv.config();
 
 const app = express();
 const PORT = 3000;
+
+app.use (express.json());
 
 // Connect to the MongoDB database
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -24,4 +27,5 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
     console.error('Error connecting to MongoDB:', error);
   });
 
-app.use("/api/user", userRouter)
+  app.use("/api/user", userRouter);
+  app.use("/api/auth", authRouter);
