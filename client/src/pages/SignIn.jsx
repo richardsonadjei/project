@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { signinStart, signinSuccess, signinFailure } from '../redux/user/userSlice';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -10,9 +12,10 @@ const SignIn = () => {
     phoneNumber: '',
     bio: '',
   });
-const [Error, setError] = useState(null);
-const [Loading, setLoading] = useState();
+const {Loading, error } =useSelector((state)=> state.user);
 const navigate =useNavigate();
+
+const dispatch =useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,7 +25,7 @@ const navigate =useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      dispatch(signinStart())
     // Handle form submission here
     const res = await fetch('api/auth/signin', {
       method: 'POST',
@@ -34,18 +37,15 @@ const navigate =useNavigate();
 
     const data = await res.json();
     if (data.success === false){
-      setError(data.message);
-      setLoading(false);
+      dispatch(signinFailure(data.message));
       return;
     }
-    setLoading(false);
-    setError(null);
+    dispatch(signinSuccess(data));
     navigate('/');
     // setResponse(data); 
     console.log(data);
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      dispatch(signinFailure(error.message));
     }
 
     
@@ -64,7 +64,7 @@ const navigate =useNavigate();
             required
             className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
           />
-          <label className="text-gray-700">Password:</label>
+          
           <label className="text-gray-700">Password:</label>
           <input
             type="password"
