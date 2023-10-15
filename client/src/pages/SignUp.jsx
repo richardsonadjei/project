@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -10,17 +10,47 @@ const SignUp = () => {
     phoneNumber: '',
     bio: '',
   });
+const [Error, setError] = useState(null);
+const [Loading, setLoading] = useState();
+const navigate =useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  console.log(formData)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      setLoading(true);
     // Handle form submission here
-    console.log(formData);
-  };
+    const res = await fetch('api/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
 
+    const data = await res.json();
+    if (data.success === false){
+      setError(data.message);
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
+    setError(null);
+    navigate('/signin');
+    // setResponse(data); 
+    console.log(data);
+    } catch (error) {
+      setLoading(false);
+      setError(error.message);
+    }
+
+    
+   
+  };
   return (
     <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-green-400 to-blue-500">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full md:w-2/3 lg:w-1/3">
@@ -117,11 +147,13 @@ const SignUp = () => {
 
            {/* Centered Submit Button */}
            <div className="text-center">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            <button disabled={Loading}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-70"
               type="submit"
+             
             >
-              Sign Up
+              
+              {Loading ? 'Loading...': 'Sign Up'}
             </button>
           </div>
           <p className="mt-4 text-gray-600 text-center">
