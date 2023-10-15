@@ -10,7 +10,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-gradient-to-r from-green-500 to-blue-900 py-4 shadow-lg">
+    <header className="bg-gradient-to-r from-green-500 to-blue-900 py-4 shadow-lg fixed w-full top-0 z-5">
       <div className="container mx-auto flex justify-between items-center px-4">
         <Link to="/about" className="flex items-center text-white text-lg font-bold">
           <GiCoffeeBeans className="mr-2 text-2xl text-gold" />
