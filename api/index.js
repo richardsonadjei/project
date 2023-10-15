@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import userRouter from './routes/user.route.js';
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
     console.log('Connected to MongoDB');
     
     // Set up your routes and middleware here
-    
+
     // Start the server
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
@@ -23,6 +24,4 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
     console.error('Error connecting to MongoDB:', error);
   });
 
-app.get('/', (req, res) => {
-  res.send('Hello, world!');
-});
+app.use("/api/user", userRouter)
