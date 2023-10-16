@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import OAuth from '../components/OAuth';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -54,7 +55,7 @@ const navigate =useNavigate();
   return (
     <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-green-400 to-blue-500">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full md:w-2/3 lg:w-1/3">
-        <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">Sign Up</h2>
+        <h2 className="text-3xl font-semibold mb-4 text-center text-gray-800">Sign Up</h2>
         <form onSubmit={handleSubmit}>
           {/* Full Name */}
           <div className="mb-4">
@@ -155,8 +156,13 @@ const navigate =useNavigate();
               
               {Loading ? 'Loading...': 'Sign Up'}
             </button>
+            {/* OAuth Button */}
+        <div className="mt-4">
+          <OAuth />
+        </div>
           </div>
-          <p className="mt-4 text-gray-600 text-center">
+          
+          <p className="mt-1 text-gray-600 text-center">
           Already Having An Account?{' '}
           <Link to="/signin" className="text-blue-500 hover:underline">
             SignIn

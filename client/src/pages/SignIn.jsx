@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signinStart, signinSuccess, signinFailure } from '../redux/user/userSlice';
+import OAuth from '../components/OAuth';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -83,7 +84,9 @@ const dispatch =useDispatch();
               
               {Loading ? 'Loading...': 'Sign In'}
             </button>
+            
           </div>
+          <OAuth />
         </form>
         <p className="mt-4 text-gray-600 text-center">
           Not having an account?{' '}
