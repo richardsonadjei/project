@@ -6,52 +6,45 @@ import OAuth from '../components/OAuth';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
-    fullname: '',
-    username: '',
     email: '',
     password: '',
-    phoneNumber: '',
-    bio: '',
   });
-const {Loading, error } =useSelector((state)=> state.user);
-const navigate =useNavigate();
 
-const dispatch =useDispatch();
+  const { loading, error } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  console.log(formData)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(signinStart())
-    // Handle form submission here
-    const res = await fetch('api/auth/signin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+      dispatch(signinStart());
 
-    const data = await res.json();
-    if (data.success === false){
-      dispatch(signinFailure(data.message));
-      return;
-    }
-    dispatch(signinSuccess(data));
-    navigate('/');
-    // setResponse(data); 
-    console.log(data);
+      // Handle form submission here
+      const res = await fetch('api/auth/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signinFailure(data.message));
+        return;
+      }
+
+      dispatch(signinSuccess(data));
+      navigate('/');
     } catch (error) {
       dispatch(signinFailure(error.message));
     }
-
-    
-   
   };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-green-400 to-blue-500">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
@@ -60,31 +53,32 @@ const dispatch =useDispatch();
           <label className="text-gray-700">Email:</label>
           <input
             type="email"
-            value={formData.email}  // Use formData.email
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}  // Update formData.email
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             required
             className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
           />
-          
+
           <label className="text-gray-700">Password:</label>
           <input
             type="password"
-            value={formData.password}  // Use formData.password
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}  // Update formData.password
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             required
             className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
           />
+
           {/* Centered Submit Button */}
           <div className="text-center">
-            <button disabled={Loading}
+            <button
+              disabled={loading}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-70"
               type="submit"
-             
             >
-              
-              {Loading ? 'Loading...': 'Sign In'}
+              {loading ? 'Loading...' : 'Sign In'}
             </button>
-            
           </div>
           <OAuth />
         </form>
