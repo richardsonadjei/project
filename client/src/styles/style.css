@@ -1,0 +1,20 @@
+body {
+    background-color: black;
+}
+
+.aside-menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 21rem; /* Width of the aside component */
+    background: linear-gradient(to bottom, #0055ff, #0088ff);
+    color: white;
+    transition: transform 0.3s ease; /* Transition the transform property with ease */
+    transform: translateX(-100%); /* Move the aside component outside of the viewport */
+  }
+  
+  .aside-menu:hover {
+    transform: translateX(0%); /* Move the aside component into view when hovered */
+  }
+  
