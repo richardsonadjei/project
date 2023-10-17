@@ -2,11 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../styles/style.css';
-
 const HomePage = () => {
   // Assuming you have a Redux state to get user information
   const { currentUser } = useSelector((state) => state.user);
-
   return (
     <div className="flex h-screen bg-black pt-16">
       <aside className="aside-menu bg-gradient-to-b from-blue-500 to-blue-700 text-white w-96 h-screen mb-8 pb-4 overflow-y-auto pl-4 ml-4 pt-16">
@@ -25,17 +23,26 @@ const HomePage = () => {
           </li>
           {/* Inventory Management Section */}
           <li>
-            <h3 className="text-lg font-semibold mb-2">Inventory Management</h3>
-            <ul className="ml-4 space-y-2">
+            <h3 className="text-lg font-semibold mb-1">Inventory Management</h3>
+            <ul className="ml-4 space-y-1">
               <li>
                 <Link to="/receive-cocoa" className="text-white hover:underline">
-                  Receive Cocoa Bags
+                  Create A New Batch Of Beans
                 </Link>
               </li>
               <li>
                 <Link to="/manage-inventory" className="text-white hover:underline">
-                  Manage Inventory
+                  Recieve Cocoa Beans Ino Warehouse
                 </Link>
+                <li>
+                <Link to="/manage-inventory" className="text-white hover:underline">
+                  Perform Evacuation With Invoice
+                </Link>
+                <br />
+                <Link to="/manage-inventory" className="text-white hover:underline">
+                  Take Stock
+                </Link>
+              </li>
               </li>
             </ul>
           </li>
@@ -45,7 +52,7 @@ const HomePage = () => {
             <ul className="ml-4 space-y-2">
               <li>
                 <Link to="/create-invoice" className="text-white hover:underline">
-                  Create Invoice
+                  Perform Evacuation With Invoice
                 </Link>
               </li>
               <li>
@@ -118,10 +125,39 @@ const HomePage = () => {
               </li>
             </ul>
           </li>
+
+
+          <li>
+            <h3 className="text-lg font-semibold mb-2">Suppliers And Customers</h3>
+            <ul className="ml-4 space-y-2">
+              <li>
+                <Link to="/registerFarmer" className="text-white hover:underline">
+                  Register A Supplier
+                </Link>
+              </li>
+              <li>
+                <Link to="/business-settings" className="text-white hover:underline">
+                  Update Supplier
+                </Link>
+              </li>
+              <li>
+                <Link to="/manage-users" className="text-white hover:underline">
+                  Register A Customer
+                </Link>
+              </li>
+              <li>
+                <Link to="/manage-users" className="text-white hover:underline">
+                  Update A Cutomer
+                </Link>
+              </li>
+            </ul>
+          </li>
+
+
         </ul>
       </aside>
       {/* Content */}
-      <div className="flex flex-wrap flex-grow p-8 space-x-4">
+      <div className="flex flex-wrap flex-grow p-8">
         {/* Welcome Section */}
         <section className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-8 w-full md:w-1/2 mb-8 rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold mb-4">
@@ -136,13 +172,22 @@ const HomePage = () => {
           <h2 className="text-2xl font-bold mb-4">Quick Actions</h2>
           <div className="flex flex-wrap gap-4">
             <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
-              Add New Inventory
+              Receive Beans Into WareHouse
             </button>
             <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
-              Create Invoice
+            Perform Evacuation With Invoice
             </button>
             <button className="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700">
-              View Reports
+              View Transaction Reports
+            </button>
+            <button className="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700">
+             Add A New Supplier/Farmer
+            </button>
+            <button className="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700">
+             Add A New Evacuation Customer
+            </button>
+            <button className="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700">
+             Create A New Batch Of Beans
             </button>
           </div>
         </section>
@@ -207,5 +252,4 @@ const HomePage = () => {
     </div>
   );
 };
-
 export default HomePage;

@@ -4,6 +4,9 @@ import mongoose from 'mongoose';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js'
 import cookieParser from 'cookie-parser';
+import cocoaBagRoute from './routes/cocoaBag.route.js';
+import supplierRoute from './routes/supplierRoute.js';
+
 
 dotenv.config();
 
@@ -31,6 +34,8 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
   app.use("/api/user", userRouter);
   app.use("/api/auth", authRouter);
+  app.use('/api/cocoabag', cocoaBagRoute);
+  app.use('/api/supplier', supplierRoute);
 
 
 app.use((err, req, res, next)=>{
